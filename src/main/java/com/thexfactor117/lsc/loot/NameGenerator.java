@@ -77,7 +77,10 @@ public class NameGenerator
 	/** Returns a randomized, localized name of a current attribute to lookup in name files. */
 	private static String getAttributeString(NBTTagCompound nbt)
 	{
-		return Attribute.getRandomAttribute(nbt).getLocalizedName();
+
+		Attribute attr = Attribute.getRandomAttribute(nbt);
+
+		return attr == null ? "" :attr.getLocalizedName();
 	}
 	
 	public static String getPrefix(String property)

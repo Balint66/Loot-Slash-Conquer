@@ -1,5 +1,6 @@
 package com.thexfactor117.lsc;
 
+import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,6 +45,13 @@ public class LootSlashConquer
 	public static ServerProxy proxy;
 	public static final Logger LOGGER = LogManager.getLogger(Reference.NAME);
 	public static SimpleNetworkWrapper network;
+
+	private boolean isTCLoaded = false;
+
+	public boolean IsTCLoaded()
+	{
+		return isTCLoaded;
+	}
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
@@ -66,6 +74,9 @@ public class LootSlashConquer
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
+
+		isTCLoaded = Loader.isModLoaded("tconstruct");
+
 		ModWorldGenerators.registerWorldGenerators();
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 		proxy.init(event);

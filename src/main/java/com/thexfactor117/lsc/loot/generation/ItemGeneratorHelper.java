@@ -5,6 +5,8 @@ import java.util.Random;
 import java.util.UUID;
 
 import com.google.common.collect.Multimap;
+import com.thexfactor117.lsc.LootSlashConquer;
+import com.thexfactor117.lsc.compat.TC.TCCompat;
 import com.thexfactor117.lsc.config.Configs;
 import com.thexfactor117.lsc.entities.projectiles.Rune;
 import com.thexfactor117.lsc.items.base.ItemBauble;
@@ -72,6 +74,10 @@ public class ItemGeneratorHelper
 			ItemBauble item = (ItemBauble) stack.getItem();
 			
 			nbt.setString("Type", item.getBaubleType(stack).toString().toLowerCase());
+		}
+		else if (LootSlashConquer.instance.IsTCLoaded())
+		{
+			TCCompat.setTCType(stack,nbt);
 		}
 	}
 	
@@ -181,6 +187,10 @@ public class ItemGeneratorHelper
 			NBTTagList list = new NBTTagList();
 			list.appendTag(armorNbt);
 			nbt.setTag("AttributeModifiers", list);
+		}
+		else if(LootSlashConquer.instance.IsTCLoaded())
+		{
+			TCCompat.setAttributeModifiers(nbt,stack);
 		}
 	}
 

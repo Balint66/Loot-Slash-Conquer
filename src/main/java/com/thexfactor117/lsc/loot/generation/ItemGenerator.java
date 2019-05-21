@@ -1,5 +1,7 @@
 package com.thexfactor117.lsc.loot.generation;
 
+import com.thexfactor117.lsc.LootSlashConquer;
+import com.thexfactor117.lsc.compat.TC.TCCompat;
 import com.thexfactor117.lsc.items.base.ItemBauble;
 import com.thexfactor117.lsc.items.base.ItemMagical;
 import com.thexfactor117.lsc.items.base.ItemRanged;
@@ -85,6 +87,10 @@ public class ItemGenerator
 				ItemGeneratorHelper.setTypes(stack, nbt);
 				nbt.setInteger("Level", level);
 				ItemGeneratorHelper.setRandomAttributes(stack, nbt, Rarity.getRarity(nbt));
+			}
+			else if(LootSlashConquer.instance.IsTCLoaded())
+			{
+				TCCompat.creatAsLSCItem(stack,nbt,world,level);
 			}
 		}
 	}

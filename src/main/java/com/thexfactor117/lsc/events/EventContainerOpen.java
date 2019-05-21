@@ -1,6 +1,8 @@
 package com.thexfactor117.lsc.events;
 
+import com.thexfactor117.lsc.LootSlashConquer;
 import com.thexfactor117.lsc.capabilities.implementation.LSCPlayerCapability;
+import com.thexfactor117.lsc.compat.TC.TCCompat;
 import com.thexfactor117.lsc.items.base.ItemBauble;
 import com.thexfactor117.lsc.items.base.ItemMagical;
 import com.thexfactor117.lsc.loot.Rarity;
@@ -61,6 +63,11 @@ public class EventContainerOpen
 						}
 					}
 				}
+				else if(LootSlashConquer.instance.IsTCLoaded())
+				{
+					TCCompat.onContainerOpen(player, stack);
+				}
+
 			}
 		}
 	}

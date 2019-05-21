@@ -5,3 +5,7 @@ Loot Slash Conquer (1.12)_Server.launch
 /.gradle/
 /.idea
 /build
+/run
+/libs
+/classes
+/classes/*
