@@ -21,12 +21,4 @@ public abstract class TikersMagicItem extends ItemMagical implements IRepairable
         this.setMaxStackSize(1);
     }
 
-    @SideOnly(Side.CLIENT)
-    public void initModel() {
-        if (this.getRegistryName() != null) {
-            ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(this.getRegistryName(), "inventory"));
-        }
-
-    }
-
 }

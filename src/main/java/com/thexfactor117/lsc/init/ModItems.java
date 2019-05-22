@@ -1,5 +1,9 @@
 package com.thexfactor117.lsc.init;
 
+import com.thexfactor117.lsc.compat.TC.TCRegistry;
+import com.thexfactor117.lsc.compat.TC.items.base.MagicItemCore;
+import com.thexfactor117.lsc.compat.TC.items.weapons.Staff;
+import com.thexfactor117.lsc.compat.TC.parts.StaffHead;
 import com.thexfactor117.lsc.items.base.ItemBase;
 import com.thexfactor117.lsc.items.base.ItemBauble;
 import com.thexfactor117.lsc.items.scrolls.ItemBlizzardScroll;
@@ -18,6 +22,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import slimeknights.tconstruct.library.tools.ToolPart;
 
 /**
  * 
@@ -47,6 +52,9 @@ public class ModItems
 	
 	// miscellaneous
 	public static final Item CORRUPTED_TOWER_KEY = new ItemBase("corrupted_tower_key", ModTabs.lscTab);
+
+	//Tinker
+	public static final Item TINKER_STAFF = new Staff();
 		
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event)
@@ -71,5 +79,11 @@ public class ModItems
 		
 		// miscellaneous
 		event.getRegistry().register(CORRUPTED_TOWER_KEY);
+
+		//Tinkers
+		//event.getRegistry().register();
+		TCRegistry.registerToolPart(event.getRegistry(),StaffHead.toolPartStaffHead,"staff_head");
+		event.getRegistry().register(TINKER_STAFF);
+
 	}
 }

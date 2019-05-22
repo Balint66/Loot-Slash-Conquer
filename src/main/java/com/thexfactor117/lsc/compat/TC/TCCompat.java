@@ -81,7 +81,7 @@ public class TCCompat
 
             ItemGeneratorHelper.setMinMaxDamage(nbt, damage);
 
-            float realDammage = (nbt.getInteger("MinDamage") + nbt.getInteger("MaxDamage") + nbt.getCompoundTag("Stats").getFloat("Attack")) / 3f;
+            float realDammage = (nbt.getInteger("MinDamage") + nbt.getInteger("MaxDamage")) / 3f;
 
             nbt.getCompoundTag("Stats").setFloat("Attack",realDammage);
 
