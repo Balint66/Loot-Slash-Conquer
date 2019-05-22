@@ -4,13 +4,13 @@ import java.util.Random;
 
 import com.thexfactor117.lsc.loot.attributes.AttributeBaseWeapon;
 import com.thexfactor117.lsc.loot.attributes.AttributeUtil;
-import com.thexfactor117.lsc.util.misc.LSCDamageSource;
 import com.thexfactor117.lsc.util.misc.NBTHelper;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,35 +20,37 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @author TheXFactor117
  *
  */
-public class AttributeFireDamage extends AttributeBaseWeapon
+public class AttributeStun extends AttributeBaseWeapon
 {
-	public AttributeFireDamage()
+	public AttributeStun()
 	{
-		super("fire_damage", "attributes.weapon.fire_damage", 2, true, false, true);
+		super("stun", "attributes.weapon.stun", 0.03, true, false, true);
 	}
 	
 	@Override
 	public void onHit(ItemStack stack, float damage, EntityLivingBase attacker, EntityLivingBase enemy)
 	{
-		enemy.hurtResistantTime = 0;
-		enemy.attackEntityFrom(LSCDamageSource.causeFireDamage(attacker), (float) this.getAttributeValue(NBTHelper.loadStackNBT(stack)));
+		if (Math.random() < this.getAttributeValue(NBTHelper.loadStackNBT(stack)))
+		{
+			enemy.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20 * 3, 10));
+		}
 	}
 	
 	@Override
 	public void addAttribute(ItemStack stack, NBTTagCompound nbt, Random rand)
 	{
 		super.addAttribute(stack, nbt, rand);
-		AttributeUtil.addDamageAttribute(this, stack, nbt, rand);
+		AttributeUtil.addPercentageAttribute(this, stack, nbt, rand, 0.6);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getTooltipDisplay(NBTTagCompound nbt)
 	{
-		int value = (int) this.getAttributeValue(nbt);
-		int minValue = (int) this.getAttributeMinValue(nbt);
-		int maxValue = (int) this.getAttributeMaxValue(nbt);
+		int value = (int) (this.getAttributeValue(nbt) * 100);
+		int minValue = (int) (this.getAttributeMinValue(nbt) * 100);
+		int maxValue = (int) (this.getAttributeMaxValue(nbt) * 100);
 		
-		return TextFormatting.RED + " * +" + value + " " + I18n.format(this.getKey()) + TextFormatting.GRAY + " [" + minValue + " - " + maxValue + "]";
+		return TextFormatting.RED + " * +" + value + "% chance to stun the enemy " + TextFormatting.GRAY + "[" + minValue + "% - " + maxValue + "%]";
 	}
 }
