@@ -3,9 +3,9 @@ package com.thexfactor117.lsc.events;
 import com.thexfactor117.lsc.LootSlashConquer;
 import com.thexfactor117.lsc.capabilities.implementation.LSCPlayerCapability;
 import com.thexfactor117.lsc.config.Configs;
-import com.thexfactor117.lsc.network.PacketClassGui;
-import com.thexfactor117.lsc.network.PacketUpdatePlayerInformation;
-import com.thexfactor117.lsc.network.PacketUpdatePlayerStats;
+import com.thexfactor117.lsc.network.client.PacketClassGui;
+import com.thexfactor117.lsc.network.client.PacketUpdatePlayerInformation;
+import com.thexfactor117.lsc.network.client.PacketUpdatePlayerStats;
 import com.thexfactor117.lsc.util.PlayerUtil;
 
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -49,5 +49,12 @@ public class EventPlayerLoggedIn
 			LootSlashConquer.network.sendTo(new PacketUpdatePlayerStats(cap), (EntityPlayerMP) event.player);
 			LootSlashConquer.network.sendTo(new PacketUpdatePlayerInformation(cap), (EntityPlayerMP) event.player);
 		}
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event)
+	{
+		LSCPlayerCapability cap = PlayerUtil.getLSCPlayer(event.player);
+		cap.removeBonusStats();
 	}
 }

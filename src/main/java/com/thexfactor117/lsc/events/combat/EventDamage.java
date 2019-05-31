@@ -2,9 +2,7 @@ package com.thexfactor117.lsc.events.combat;
 
 import com.thexfactor117.lsc.capabilities.implementation.LSCPlayerCapability;
 import com.thexfactor117.lsc.config.Configs;
-import com.thexfactor117.lsc.loot.Attribute;
 import com.thexfactor117.lsc.loot.Rarity;
-import com.thexfactor117.lsc.player.WeaponUtils;
 import com.thexfactor117.lsc.util.DamageUtil;
 import com.thexfactor117.lsc.util.ItemUtil;
 import com.thexfactor117.lsc.util.PlayerUtil;
@@ -60,7 +58,7 @@ public class EventDamage
 					{
 						playerMeleeAttack(event, player, enemy, weapon, cap);
 					}
-					// TODO: ranged attack
+					// ranged attack
 					else if (weapon.getItem() instanceof ItemBow && event.getSource().getImmediateSource() instanceof EntityArrow)
 					{
 						playerRangedAttack(event, player, enemy, weapon, cap);
@@ -96,14 +94,6 @@ public class EventDamage
 					{
 						double damage = DamageUtil.applyArmorReductions(event.getAmount(), player, cap);
 						event.setAmount((float) damage);
-						
-						// loop through all armor pieces to use the durability attribute
-						for (ItemStack stack : player.getArmorInventoryList())
-						{
-							NBTTagCompound nbt = NBTHelper.loadStackNBT(stack);
-							
-							if (Attribute.DURABLE.hasAttribute(nbt) && Math.random() < Attribute.DURABLE.getAmount(nbt)) stack.setItemDamage(stack.getItemDamage() - 1);
-						}
 					}
 				}
 			}
@@ -138,9 +128,8 @@ public class EventDamage
 				// set the true amount of damage.
 				double trueDamage = ItemUtil.getItemDamage(weapon);
 				trueDamage = DamageUtil.applyDamageModifiers(cap, trueDamage, DamageUtil.DamageType.PHYSICAL_MELEE);
-				trueDamage = DamageUtil.applyCriticalModifier(cap, trueDamage);
-
-				//WeaponUtils.useWeaponAttributes((float) trueDamage, player, enemy, weapon, nbt);
+				trueDamage = DamageUtil.applyCriticalModifier(cap, weapon, trueDamage);
+				DamageUtil.applyAttributes(cap, weapon, player, enemy, trueDamage);
 				
 				event.setAmount((float) trueDamage);
 			}
@@ -161,12 +150,12 @@ public class EventDamage
 			else
 			{
 				// set the true amount of damage.
-				double trueDamage = Math.random() * (nbt.getInteger("MaxDamage") - nbt.getInteger("MinDamage")) + nbt.getInteger("MinDamage");
+				double trueDamage = ItemUtil.getItemDamage(weapon);
 				trueDamage = DamageUtil.applyDamageModifiers(cap, trueDamage, DamageUtil.DamageType.PHYSICAL_RANGED);
-				trueDamage = DamageUtil.applyCriticalModifier(cap, trueDamage);
+				trueDamage = DamageUtil.applyCriticalModifier(cap, weapon, trueDamage);
+				DamageUtil.applyAttributes(cap, weapon, player, enemy, trueDamage);
 				
 				event.setAmount((float) trueDamage);
-				WeaponUtils.useWeaponAttributes(event.getAmount(), player, enemy, weapon, nbt);
 			}
 		}
 	}

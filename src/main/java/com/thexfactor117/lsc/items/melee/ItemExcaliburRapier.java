@@ -3,11 +3,14 @@ package com.thexfactor117.lsc.items.melee;
 import com.thexfactor117.lsc.capabilities.api.IChunkLevel;
 import com.thexfactor117.lsc.capabilities.api.IChunkLevelHolder;
 import com.thexfactor117.lsc.capabilities.cap.CapabilityChunkLevel;
-import com.thexfactor117.lsc.init.ModTabs;
-import com.thexfactor117.lsc.items.base.ISpecial;
-import com.thexfactor117.lsc.items.base.ItemMelee;
-import com.thexfactor117.lsc.loot.Attribute;
+import com.thexfactor117.lsc.items.base.weapons.ISpecial;
+import com.thexfactor117.lsc.items.base.weapons.ItemMelee;
 import com.thexfactor117.lsc.loot.Rarity;
+import com.thexfactor117.lsc.loot.attributes.Attribute;
+import com.thexfactor117.lsc.loot.attributes.weapons.AttributeFireDamage;
+import com.thexfactor117.lsc.loot.attributes.weapons.AttributeFrostDamage;
+import com.thexfactor117.lsc.loot.attributes.weapons.AttributeLightningDamage;
+import com.thexfactor117.lsc.loot.attributes.weapons.AttributeNausea;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,10 +24,9 @@ import net.minecraft.world.World;
  */
 public class ItemExcaliburRapier extends ItemMelee implements ISpecial
 {
-	public ItemExcaliburRapier(ToolMaterial material, String name, String type)
+	public ItemExcaliburRapier(ToolMaterial material, String name)
 	{
-		super(material, name, type);
-		this.setCreativeTab(ModTabs.lscTab);
+		super(material, name, 1, 1);
 	}
 
 	@Override
@@ -38,10 +40,17 @@ public class ItemExcaliburRapier extends ItemMelee implements ISpecial
 		Rarity.setRarity(nbt, Rarity.LEGENDARY);
 		nbt.setInteger("Level", level);
 		
-		// Attributes
-		Attribute.FIRE.addAttribute(nbt, world.rand, 3);
-		Attribute.FROST.addAttribute(nbt, world.rand, 3);
-		Attribute.LIGHTNING.addAttribute(nbt, world.rand, 3);
-		Attribute.STRENGTH.addAttribute(nbt, world.rand, 8);
+		Attribute fire = new AttributeFireDamage();
+		fire.setBaseValue(4);
+		fire.addAttribute(stack, nbt, world.rand);
+		Attribute frost = new AttributeFrostDamage();
+		frost.setBaseValue(4);
+		frost.addAttribute(stack, nbt, world.rand);
+		Attribute lightning = new AttributeLightningDamage();
+		lightning.setBaseValue(4);
+		lightning.addAttribute(stack, nbt, world.rand);
+		Attribute nausea = new AttributeNausea();
+		nausea.setBaseValue(0.15);
+		nausea.addAttribute(stack, nbt, world.rand);
 	}
 }

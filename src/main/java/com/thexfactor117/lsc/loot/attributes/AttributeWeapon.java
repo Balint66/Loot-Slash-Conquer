@@ -9,13 +9,13 @@ import net.minecraft.nbt.NBTTagCompound;
  * @author TheXFactor117
  *
  */
-public class AttributeBaseWeapon extends AttributeBase
+public class AttributeWeapon extends Attribute
 {
 	private boolean isActive;
 
-	public AttributeBaseWeapon(String name, String key, double baseValue, boolean upgradeable, boolean isBonus, boolean isActive)
+	public AttributeWeapon(String name, String key, double baseValue, boolean upgradeable, boolean isActive)
 	{
-		super(name, key, baseValue, upgradeable, isBonus);
+		super(name, key, baseValue, upgradeable);
 		this.isActive = isActive;
 	}
 
@@ -29,7 +29,7 @@ public class AttributeBaseWeapon extends AttributeBase
 	 * @param nbt
 	 */
 	public void onHit(ItemStack stack, float damage, EntityLivingBase attacker, EntityLivingBase enemy) { }
-	
+
 	public double getPassiveValue(NBTTagCompound nbt)
 	{
 		return nbt.getDouble(this.getName() + "_value");

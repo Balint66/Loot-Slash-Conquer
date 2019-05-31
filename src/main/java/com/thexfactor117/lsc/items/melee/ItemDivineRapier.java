@@ -3,11 +3,13 @@ package com.thexfactor117.lsc.items.melee;
 import com.thexfactor117.lsc.capabilities.api.IChunkLevel;
 import com.thexfactor117.lsc.capabilities.api.IChunkLevelHolder;
 import com.thexfactor117.lsc.capabilities.cap.CapabilityChunkLevel;
-import com.thexfactor117.lsc.init.ModTabs;
-import com.thexfactor117.lsc.items.base.ISpecial;
-import com.thexfactor117.lsc.items.base.ItemMelee;
-import com.thexfactor117.lsc.loot.Attribute;
+import com.thexfactor117.lsc.items.base.weapons.ISpecial;
+import com.thexfactor117.lsc.items.base.weapons.ItemMelee;
 import com.thexfactor117.lsc.loot.Rarity;
+import com.thexfactor117.lsc.loot.attributes.Attribute;
+import com.thexfactor117.lsc.loot.attributes.weapons.AttributeAttackSpeed;
+import com.thexfactor117.lsc.loot.attributes.weapons.AttributeCriticalDamage;
+import com.thexfactor117.lsc.loot.attributes.weapons.AttributeFireDamage;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,10 +23,9 @@ import net.minecraft.world.World;
  */
 public class ItemDivineRapier extends ItemMelee implements ISpecial
 {
-	public ItemDivineRapier(ToolMaterial material, String name, String type)
+	public ItemDivineRapier(ToolMaterial material, String name)
 	{
-		super(material, name, type);
-		this.setCreativeTab(ModTabs.lscTab);
+		super(material, name, 1, 1);
 	}
 
 	@Override
@@ -38,9 +39,14 @@ public class ItemDivineRapier extends ItemMelee implements ISpecial
 		Rarity.setRarity(nbt, Rarity.EPIC);
 		nbt.setInteger("Level", level);
 		
-		// Attributes
-		Attribute.FIRE.addAttribute(nbt, world.rand, 5);
-		Attribute.STRENGTH.addAttribute(nbt, world.rand, 3);
-		Attribute.DURABLE.addAttribute(nbt, world.rand, 0.3);
+		Attribute fire = new AttributeFireDamage();
+		fire.setBaseValue(5);
+		fire.addAttribute(stack, nbt, world.rand);
+		Attribute attackSpeed = new AttributeAttackSpeed();
+		attackSpeed.setBaseValue(0.2);
+		attackSpeed.addAttribute(stack, nbt, world.rand);
+		Attribute criticalDamage = new AttributeCriticalDamage();
+		criticalDamage.setBaseValue(0.3);
+		criticalDamage.addAttribute(stack, nbt, world.rand);
 	}
 }

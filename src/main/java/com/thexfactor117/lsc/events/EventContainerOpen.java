@@ -4,7 +4,7 @@ import com.thexfactor117.lsc.LootSlashConquer;
 import com.thexfactor117.lsc.capabilities.implementation.LSCPlayerCapability;
 import com.thexfactor117.lsc.compat.TC.TCCompat;
 import com.thexfactor117.lsc.items.base.ItemBauble;
-import com.thexfactor117.lsc.items.base.ItemMagical;
+import com.thexfactor117.lsc.items.base.weapons.ItemMagical;
 import com.thexfactor117.lsc.loot.Rarity;
 import com.thexfactor117.lsc.loot.generation.ItemGeneration;
 import com.thexfactor117.lsc.util.PlayerUtil;

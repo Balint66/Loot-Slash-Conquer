@@ -3,23 +3,23 @@ package com.thexfactor117.lsc.items.melee;
 import com.thexfactor117.lsc.capabilities.api.IChunkLevel;
 import com.thexfactor117.lsc.capabilities.api.IChunkLevelHolder;
 import com.thexfactor117.lsc.capabilities.cap.CapabilityChunkLevel;
-import com.thexfactor117.lsc.init.ModTabs;
-import com.thexfactor117.lsc.items.base.ISpecial;
-import com.thexfactor117.lsc.items.base.ItemAdvancedMelee;
-import com.thexfactor117.lsc.loot.Attribute;
+import com.thexfactor117.lsc.items.base.weapons.ISpecial;
+import com.thexfactor117.lsc.items.base.weapons.ItemMelee;
 import com.thexfactor117.lsc.loot.Rarity;
+import com.thexfactor117.lsc.loot.attributes.Attribute;
+import com.thexfactor117.lsc.loot.attributes.weapons.AttributeChained;
+import com.thexfactor117.lsc.loot.attributes.weapons.AttributeVoid;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 
-public class ItemDoomshadow extends ItemAdvancedMelee implements ISpecial
+public class ItemDoomshadow extends ItemMelee implements ISpecial
 {
-	public ItemDoomshadow(ToolMaterial material, String name, String type, double damageMultiplier, double speedMultiplier)
+	public ItemDoomshadow(ToolMaterial material, String name, double damageMultiplier, double speedMultiplier)
 	{
-		super(material, name, type, damageMultiplier, speedMultiplier);
-		this.setCreativeTab(ModTabs.lscTab);
+		super(material, name, damageMultiplier, speedMultiplier);
 	}
 
 	@Override
@@ -33,9 +33,11 @@ public class ItemDoomshadow extends ItemAdvancedMelee implements ISpecial
 		Rarity.setRarity(nbt, Rarity.EPIC);
 		nbt.setInteger("Level", level);
 		
-		// Attributes
-		Attribute.STRENGTH.addAttribute(nbt, world.rand, 6);
-		Attribute.FORTITUDE.addAttribute(nbt, world.rand, 4);
-		Attribute.CHAINED.addAttribute(nbt, world.rand, 10);
+		Attribute chained = new AttributeChained();
+		chained.setBaseValue(0.25);
+		chained.addAttribute(stack, nbt, world.rand);
+		Attribute voidDamage = new AttributeVoid();
+		voidDamage.setBaseValue(0.05);
+		voidDamage.addAttribute(stack, nbt, world.rand);
 	}
 }
