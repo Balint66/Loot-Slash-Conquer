@@ -14,11 +14,13 @@ public class StaffHeadMaterialStats extends AbstractMaterialStats
     public static final String LOC_ManaDesc = "stat.staff.mana.desc";
     public static final String COLOR_Mana = CustomFontColor.encodeColor(112,71,209);
     public final int mana;
+    public final int durability;
 
-    public StaffHeadMaterialStats(int mana)
+    public StaffHeadMaterialStats(int man, int durability)
     {
         super("staff");
-        this.mana = mana;
+        this.mana = man;
+        this.durability = durability;
     }
 
     @Override

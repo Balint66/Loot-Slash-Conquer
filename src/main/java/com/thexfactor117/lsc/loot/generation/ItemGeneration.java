@@ -1,5 +1,7 @@
 package com.thexfactor117.lsc.loot.generation;
 
+import com.thexfactor117.lsc.LootSlashConquer;
+import com.thexfactor117.lsc.compat.TC.TCCompat;
 import com.thexfactor117.lsc.loot.Rarity;
 import com.thexfactor117.lsc.util.ItemGenerationUtil;
 import com.thexfactor117.lsc.util.misc.NBTHelper;
@@ -29,6 +31,10 @@ public class ItemGeneration
 				ItemGenerationUtil.setRandomWeaponAttributes(stack);
 				ItemGenerationUtil.setPrimaryAttributes(stack);
 				ItemGenerationUtil.hideFlags(nbt);
+			}
+			else if (LootSlashConquer.instance.IsTCLoaded())
+			{
+				//TCCompat.createAsLSCItem(stack,world,level);
 			}
 			/*else if (stack.getItem() instanceof ItemBow)
 			{

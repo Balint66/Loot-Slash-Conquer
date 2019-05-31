@@ -1,5 +1,6 @@
 package com.thexfactor117.lsc;
 
+import com.thexfactor117.lsc.compat.TC.TCRegistry;
 import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -57,6 +58,8 @@ public class LootSlashConquer
 	public void preInit(FMLPreInitializationEvent event)
 	{	
 		LootSlashConquer.LOGGER.info("Starting initialization process...");
+
+		TCRegistry.registerMaterialStats();
 		
 		ModLootTables.register();
 		ModCapabilities.registerCapabilities();

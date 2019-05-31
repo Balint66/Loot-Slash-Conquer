@@ -19,10 +19,14 @@ import com.thexfactor117.lsc.loot.Rarity;
 
 import baubles.api.BaubleType;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import slimeknights.tconstruct.library.TinkerRegistry;
+import slimeknights.tconstruct.library.tools.Pattern;
 import slimeknights.tconstruct.library.tools.ToolPart;
+import slimeknights.tconstruct.tools.TinkerTools;
 
 /**
  * 
@@ -83,6 +87,9 @@ public class ModItems
 		//Tinkers
 		//event.getRegistry().register();
 		TCRegistry.registerToolPart(event.getRegistry(),StaffHead.toolPartStaffHead,"staff_head");
+		ItemStack stack = new ItemStack(TinkerTools.pattern);
+		Pattern.setTagForPart( stack , StaffHead.toolPartStaffHead);
+		TinkerRegistry.registerStencilTableCrafting(stack);
 		event.getRegistry().register(TINKER_STAFF);
 
 	}

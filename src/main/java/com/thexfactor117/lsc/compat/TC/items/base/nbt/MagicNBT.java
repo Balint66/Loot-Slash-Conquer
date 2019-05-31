@@ -11,15 +11,15 @@ import slimeknights.tconstruct.library.utils.TagUtil;
 public class MagicNBT extends ToolNBT
 {
 
-    private Mana mana = new Mana();
+    private int manaCost = 10;
 
-    public MagicNBT(){mana = new Mana(10);}
+    public MagicNBT(){manaCost = 10;}
 
     public MagicNBT(NBTTagCompound nbt){super(nbt);}
 
     public MagicNBT staffHead(StaffHeadMaterialStats... staffHeads)
     {
-        int dur = 0;
+        float dur = 0;
         float man = 0;
         StaffHeadMaterialStats[] stats = staffHeads;
         int l = staffHeads.length;
@@ -30,84 +30,36 @@ public class MagicNBT extends ToolNBT
             if (head != null)
             {
                 man += head.mana;
+                dur += head.durability;
             }
         }
 
+        dur /= stats.length;
         man /= stats.length;
 
-        man = Math.min(1f,man);
+        this.durability = Math.round(Math.max(1f,dur));
+        manaCost = Math.round(Math.max(1f,man));
 
-        mana = new Mana(Math.round(man));
 
         return this;
 
     }
 
-    public Mana getMana(){return mana;}
+    public int getMana(){return manaCost;}
 
     public void read(NBTTagCompound compound)
     {
         super.read(compound);
-        mana.read(compound.getCompoundTag("Mana"));
+        manaCost = compound.getInteger("ManaCost");
     }
 
     public void write(NBTTagCompound compound)
     {
         super.write(compound);
-        NBTTagCompound man = compound.getCompoundTag("Mana");
-        if (man == null)
-        {
-            compound.setTag("Mana",new NBTTagCompound());
-        }
-        mana.write(compound.getCompoundTag("Mana"));
+        compound.setInteger("ManaCost", manaCost);
     }
 
     public static MagicNBT from(ItemStack stack){return new MagicNBT(TagUtil.getToolTag(stack));}
 
-    public class Mana extends NBTTagCompound
-    {
-        private int current;
-        private int max;
-
-        public Mana()
-        {
-            max = 10;
-            current = 10;
-        }
-
-        public Mana(int max)
-        {
-            this.max = max;
-            current = max;
-        }
-
-        public void setCurrent(int value)
-        {
-            if (value > max)
-            {
-                current = max;
-            }
-            else
-            {
-                current = value;
-            }
-        }
-
-        public int getCurrent(){return current;}
-        public int getMax(){return max;}
-
-        public void read(NBTTagCompound compound)
-        {
-            this.max = compound.getInteger("Max");
-            this.current = compound.getInteger("Current");
-        }
-
-        public void write(NBTTagCompound compound)
-        {
-            compound.setInteger("Max",this.max);
-            compound.setInteger("Current",this.current);
-        }
-
-    }
 
 }

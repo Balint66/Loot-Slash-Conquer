@@ -201,7 +201,7 @@ public class EntityBarbarian extends EntityMonster
 			}
 		}
 		
-		return null;
+		return ItemStack.EMPTY;
 	}
 	
 	@Nullable

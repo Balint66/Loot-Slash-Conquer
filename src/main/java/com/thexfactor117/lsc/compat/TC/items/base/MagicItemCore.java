@@ -31,7 +31,7 @@ public abstract class MagicItemCore extends TinkersMagicItem
         this.setCreativeTab(TinkerRegistry.tabTools);
         this.setNoRepair();
         TCRegistry.registerMagicTool(this);
-        this.addCategory(new Category[]{Category.WEAPON,Category.LAUNCHER,Category.NO_MELEE});
+        this.addCategory(Category.WEAPON,Category.LAUNCHER,Category.NO_MELEE);
     }
 
     public int getMaxDamage(ItemStack stack) {
@@ -131,9 +131,9 @@ public abstract class MagicItemCore extends TinkersMagicItem
             info.addModifierInfo();
         }
 
-        NBTTagCompound mana = stack.getTagCompound().getCompoundTag("Stats").getCompoundTag("Mana");
+        NBTTagCompound mana = stack.getTagCompound().getCompoundTag("Stats");
 
-        info.add("Mana: " + mana.getInteger("Current") + "/" + mana.getInteger("Max"));
+        info.add("Mana cost: " + mana.getInteger("ManaCost"));
 
         return info.getTooltip();
     }

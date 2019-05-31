@@ -2,15 +2,19 @@ package com.thexfactor117.lsc.compat.TC;
 
 import com.google.common.collect.Lists;
 import com.thexfactor117.lsc.compat.TC.items.base.MagicItemCore;
+import com.thexfactor117.lsc.compat.TC.parts.StaffHeadMaterialStats;
 import gnu.trove.set.hash.TLinkedHashSet;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.commons.lang3.tuple.Pair;
+import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.Util;
+import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.tinkering.PartMaterialType;
 import slimeknights.tconstruct.library.tools.IPattern;
 import slimeknights.tconstruct.library.tools.IToolPart;
 import slimeknights.tconstruct.library.tools.ToolPart;
+import slimeknights.tconstruct.tools.TinkerMaterials;
 import slimeknights.tconstruct.tools.TinkerTools;
 
 import java.util.Iterator;
@@ -64,11 +68,17 @@ public class TCRegistry
         if (!name.equals(name.toLowerCase(Locale.US))) {
             throw new IllegalArgumentException(String.format("Unlocalized names need to be all lowercase! Item: %s", name));
         } else {
-            item.setUnlocalizedName(Util.prefix(name));
-            item.setRegistryName(Util.getResource(name));
+            item.setUnlocalizedName("lsc." + name);
+            item.setRegistryName("lsc",name);
             registry.register(item);
             return item;
         }
+    }
+
+    public static void registerMaterialStats()
+    {
+        Material.UNKNOWN.addStats(new StaffHeadMaterialStats(0,10));
+        TinkerRegistry.addMaterialStats(TinkerMaterials.wood,new StaffHeadMaterialStats(10,10));
     }
 
 }

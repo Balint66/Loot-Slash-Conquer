@@ -238,3 +238,9 @@ attributes.armor.all_stats=All Stats
 ### Tabs
 itemGroup.tab_lsc=Loot Slash Conquer
 itemGroup.tab_lsc_dev=Loot Slash Conquer - Development
+
+### Tinker
+stat.staff.mana.name=mana
+stat.staff.mana.desc=The cost of casting with this item
+stat.staff.name=Staff
+item.staff_head.name = staff head
